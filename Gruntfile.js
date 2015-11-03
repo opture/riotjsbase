@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     // Configurable paths
     var config = {
-        app: 'Scripts/app',
+        app: 'app',
         dist: 'dist',
         pub: 'public'
     };
@@ -21,14 +21,14 @@ module.exports = function (grunt) {
                 concat: true
             },
             compile: {
-                src: 'tags/**/*.tag',
-                dest: 'js/tags.js'
+                src: 'app/tags/**/*.tag',
+                dest: 'www/js/tags.js'
             },
         },
         sass_globbing: {
             your_target: {
                 files: {
-                    'scss/_tags.scss': 'tags/**/*.scss'
+                    'app/scss/_tags.scss': 'app/tags/**/*.scss'
                 },
                 options: {
                     useSingleQuotes: false
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
             },
             dist:{
                 files:{
-                    "www/css/styles.css": "scss/styles.scss"
+                    "www/css/styles.css": "app/scss/styles.scss"
                 }
             }
         },
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'www/js/script.min.js': ['js/lib/*.js', 'js/tags.js']
+                    'www/js/script.min.js': ['app/js/lib/*.js', 'app/js/tags.js']
                 }
             }
         },
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
                     collapseWhitespace: true
                 },
                 files: {                                   // Dictionary of files
-                    'www/index.html': 'index.html'
+                    'www/index.html': 'app/index.html'
                 }
             }
         },
@@ -92,20 +92,20 @@ module.exports = function (grunt) {
         watch: {
 
             htmlminify:{
-                files: ['index.html'],
+                files: ['app/index.html'],
                 tasks: ['htmlmin:dist']               
             },
             makeugly:{
-                files: ['js/lib/**/*.js'],
+                files: ['app/js/lib/**/*.js'],
                 tasks: ['uglify']               
             },
             riottags: {
-                files: ['tags/**/*.tag'],
+                files: ['app/tags/**/*.tag'],
                 tasks: ['riot', 'uglify'],
                 options: {}
             },
             sass: {
-                files: ['scss/styles.scss', 'tags/**/*.scss'],
+                files: ['app/scss/styles.scss', 'app/tags/**/*.scss'],
                 tasks: ['sass_globbing','sass:dist','postcss']
             },
             livereload: {
