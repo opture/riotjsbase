@@ -1,6 +1,11 @@
-$default_color: rgba(0,0,0,0.5);
+$bdefault_background: white;
 body{
-	background-color: $default-color;
+	background-color: $bdefault_background;
+	margin:0;
+	padding:0;
+	height:100%;
+	width:100%;
+	font-size:100%;
 }
-
+@import "animations";
 @import "tags";

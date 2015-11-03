@@ -3,10 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>App</title>
-	<link rel="stylesheet" href="css/styles.css">
+    <meta name="description" content="App description">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Enable all requests, inline styles, and eval() -->
+	<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *;script-src * 'unsafe-inline' 'unsafe-eval'">	
+
+	<link rel="stylesheet" href="css/styles.css" />
+
 </head>
 <body>
-	Hello!
+	<iscroller animateitemclass="flipInUp">
+		<longlist></longlist>
+	</iscroller>
 </body>
 <script src="js/script.min.js"></script>
+<script>
+	riot.mount('*');
+</script>
 </html>

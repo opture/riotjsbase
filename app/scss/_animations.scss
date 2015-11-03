@@ -1,0 +1,85 @@
+.animated-fast {
+  animation-duration: 200ms;
+  animation-fill-mode: both;
+}
+
+.animated-medium {
+  animation-duration: 400ms;
+  animation-fill-mode: both;
+}
+
+.animated-slow {
+  animation-duration: 800ms;
+  animation-fill-mode: both;
+}
+
+.animated-x-slow {
+  animation-duration: 1200ms;
+  animation-fill-mode: both;
+}
+
+
+@for $i from 1 to 10 {
+  .animation-delay-#{$i} { animation-delay: $i * 0.025s; }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes zoomInLeft {
+  0% {
+    opacity: 0;
+    transform: scale3d(.1, .1, .1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(.475, .475, .475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
+}
+
+.zoomInLeft {
+  animation-name: zoomInLeft;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 60%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes flipInUp {
+  0% {
+    opacity: 0;
+    transform-origin: 0% 0%;
+    transform: rotateZ(25deg) translate3d(20%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.flipInUp {
+  animation-name: flipInUp;
+}

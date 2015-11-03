@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             },
             compile: {
                 src: 'app/tags/**/*.tag',
-                dest: 'www/js/tags.js'
+                dest: 'app/js/tags.js'
             },
         },
         sass_globbing: {
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'www/js/script.min.js': ['app/js/lib/*.js', 'app/js/tags.js']
+                    'www/js/script.min.js': ['app/js/3rdparty/*.js','app/js/lib/*.js','app/js/stores/*.js', 'app/js/tags.js']
                 }
             }
         },
@@ -96,7 +96,7 @@ module.exports = function (grunt) {
                 tasks: ['htmlmin:dist']               
             },
             makeugly:{
-                files: ['app/js/lib/**/*.js'],
+                files: ['app/js/3rdparty/*.js','app/js/lib/*.js','app/stores/*.js'],
                 tasks: ['uglify']               
             },
             riottags: {

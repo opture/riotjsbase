@@ -1,4 +1,14 @@
-riot.tag('iscroller', '<div name="wrapper"><div name="innerscroller"><div class="pullDown"><span class="pullDownIcon">&nbsp;</span><span name="pulldownlabel" class="pullDownLabel" style="position:absolute;top:-40px;width:100%;left:0;right:0;display:block;">Pull down to refresh...</span></div><yield></yield></div></div>', function(opts) {
+<iscroller>
+	<div name="wrapper">
+		<div name="innerscroller">
+			<div class="pullDown">
+				<span class="pullDownIcon">&nbsp;</span>
+				<span name="pulldownlabel" class="pullDownLabel" style="position:absolute;top:-40px;width:100%;left:0;right:0;display:block;">Pull down to refresh...</span>
+			</div>
+			<yield/>
+		</div>
+	</div>
+	<script>
 		var self = this;
 		self.scrollTimer = null;
 		self.pullingForRefresh = false;
@@ -18,7 +28,7 @@ riot.tag('iscroller', '<div name="wrapper"><div name="innerscroller"><div class=
 		}
 		
 		self.onScrollerReady = function(theScroller){
-
+			//Set up scroller event listeners.
 			self.iScroller.on('scroll', self.onScrolling);
 
 			self.iScroller.on('scrollStart', self.onScrollStart);
@@ -75,7 +85,7 @@ riot.tag('iscroller', '<div name="wrapper"><div name="innerscroller"><div class=
 					self.iScroller.refresh();	
 				},0)
 			}
-
+			//Run once if there are any items in view that are hidden.
 			self.onScrolling();		
 			self.wrapperHeight = self.wrapper.offsetHeight;	
 			self.animateItemClass = opts.animateitemclass || 'fadeIn'; 
@@ -87,21 +97,5 @@ riot.tag('iscroller', '<div name="wrapper"><div name="innerscroller"><div class=
 
 		self.on('mount', self.setupScroller);
 
-	
-});riot.tag('top-menu-side-menu-foldin', '<div name="pageContainer"></div><div name="topmenu"></div><div name="sidemenu"></div>', function(opts) {
-	
-});riot.tag('longlist', '<div each="{arrItem in testArr}" class="hidden animated-slow"> {arrItem} </div>', function(opts) {
-		var self = this;
-		self.testArr = [];
-		self.on('mount', function(){
-			for (var x=0;x<300;x++){
-				self.testArr.push('abc12' + x);
-			}
-			setTimeout(function(){
-				riot.update();
-			},250)
-			
-		});
-
-	
-});
+	</script>
+</iscroller>
