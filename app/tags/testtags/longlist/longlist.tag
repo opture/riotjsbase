@@ -4,10 +4,10 @@
 	</div>
 	<script>
 		var self = this;
-		self.testArr = [];
-		self.on('mount', function(){
+		this.testArr = [];
+		this.on('mount', function(){
 			for (var x=0;x<300;x++){
-				self.testArr.push('abc12' + x);
+				this.testArr.push('abc12' + x);
 			}
 			setTimeout(function(){
 				riot.update();

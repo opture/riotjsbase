@@ -35,7 +35,18 @@
 .fadeIn {
   animation-name: fadeIn;
 }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
+.fadeOut {
+  animation-name: fadeOut;
+}
 @keyframes zoomInLeft {
   0% {
     opacity: 0;

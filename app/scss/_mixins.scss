@@ -1,0 +1,14 @@
+@mixin fit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+@mixin centered-background {
+  background-size: cover;
+  background-clip: content-box;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transition: background-image 0.3s linear;
+}

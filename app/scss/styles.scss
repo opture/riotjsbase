@@ -1,4 +1,13 @@
+@import "mixins";
 $bdefault_background: white;
+$top-menu-height:3rem;
+$side-menu-width:4.5rem;
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body{
 	background-color: $bdefault_background;
 	margin:0;
@@ -9,3 +18,37 @@ body{
 }
 @import "animations";
 @import "tags";
+
+
+@media only screen and (min-width: 360px) {
+  body,
+  html {
+    font-size: 18px;
+  }
+}
+@media only screen and (min-width: 375px) {
+  body,
+  html {
+    font-size: 18px;
+  }
+}
+@media only screen and (min-width: 480px) {
+  body,
+  html {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body,
+  html {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  body,
+  html {
+    font-size: 33px;
+  }
+}

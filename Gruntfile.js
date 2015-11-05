@@ -62,6 +62,10 @@ module.exports = function (grunt) {
         },
         uglify: {
             my_target: {
+                options: {
+                    sourceMap: true,
+                    sourceMapName: 'www/js/script.min.map'
+                },                
                 files: {
                     'www/js/script.min.js': ['app/js/3rdparty/*.js','app/js/lib/*.js','app/js/stores/*.js', 'app/js/tags.js']
                 }
@@ -78,6 +82,16 @@ module.exports = function (grunt) {
                 }
             }
         },
+        copy:{
+            images:{
+                files: [{ 
+                    expand: true,
+                    cwd: 'app/img/', 
+                    src: ['**/*.{png,jpg,svg}'], 
+                    dest:'www/img/' 
+                }]                
+            }
+        },
         connect: {
             server: {
                 options: {
@@ -90,6 +104,11 @@ module.exports = function (grunt) {
         },
         // Watches files for changes and runs tasks based on the changed files
         watch: {
+            images: {
+                files: ['app/img/**/*.{jpg,png,gif,svg}'],
+                tasks: ['riot', 'uglify'],
+                options: {}
+            },
 
             htmlminify:{
                 files: ['app/index.html'],
@@ -117,6 +136,6 @@ module.exports = function (grunt) {
         },
 
     });
-grunt.registerTask('serve', ['sass_globbing','sass:dist','riot','postcss:dist','uglify', 'htmlmin:dist','connect:server','watch']);
+grunt.registerTask('serve', ['sass_globbing','sass:dist','riot','postcss:dist','uglify', 'htmlmin:dist','copy:images','connect:server','watch']);
 grunt.registerTask('pcss', ['postcss']);
 };

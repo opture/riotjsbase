@@ -1,0 +1,20 @@
+start-page {
+	display:flex;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	padding-top:3rem;
+	padding-left:1rem;
+	padding-right:1rem;
+	flex-flow:column wrap;
+	justify-content:center;
+	align-items:center;
+	> div {
+		display:flex;
+		flex-flow:row wrap;
+		align-items:center;
+		justify-content:center;
+	}
+}

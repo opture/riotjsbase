@@ -1,0 +1,52 @@
+sjuarticle{
+  display: block;
+  position: relative;
+  margin: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background: white;
+  max-width: 22rem;
+  box-shadow: 2px 2px 6px rgba(83, 83, 83, 0.7);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+	  
+	img {
+		width:100%;
+		margin: 0;
+	}
+    h5{
+	  position: relative;
+	  font-size:1.2rem;
+	  padding: 0.5rem 2rem 0.5rem 0.75rem;
+	  text-align: left;
+	  margin: 0;
+	  font-weight:normal;
+	  background-color: white;
+	  max-width:18rem;
+	  border-top-left-radius: 0.5rem;
+	  border-top-right-radius: 0.5rem;
+
+	}	
+	.artImageContainer{
+		width:100%;
+		position:relative;
+	}
+	.artImageContainer.noArticleImage > div{
+		margin-top:50%;
+	}
+	svg{
+		position:absolute;
+		width:4rem;
+		height:4rem;
+		left:calc(50% - 2rem);
+		top:calc(50% - 2rem);
+		border:6px solid white;
+		border-radius:3rem;
+		fill:white;
+		box-shadow: 0 0 2rem 1rem rgba(255,255,255,0.4);
+		padding-left:0.25rem;
+		background:rgba(255,255,255,0.4);
+
+	}
+
+}

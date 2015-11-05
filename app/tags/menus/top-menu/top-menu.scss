@@ -1,0 +1,46 @@
+top-menu{
+	display:flex;
+	flex-flow: row nowrap;
+	width:100%;
+	justify-content:space-between;
+	div{
+		
+		line-height:3rem;
+		padding:0 0.25rem;
+		font-size:2rem;
+		text-align:center;
+	}
+	svg{
+		width:2.25rem;
+		height: 2.25rem;
+	}	
+	div:first-child{
+		width:3rem;
+	}
+	div:nth-child(2){
+		width:3rem;
+	}		
+	div:nth-child(3){
+		background:url(../img/frilagd_lilla7an.png);
+		background-clip: content-box;
+		padding: 0;
+		background-size:90% 90%;
+		background-repeat: no-repeat;
+		background-position: 0 -2px;
+		width:3rem;
+	}
+	div:nth-child(4){
+		background:url(../img/100procent.png);
+		background-clip: content-box;
+		padding: 0;
+		background-size:contain;
+		background-repeat: no-repeat;
+		background-position: center top;
+		flex:3 auto;
+	}	
+	div:last-child{
+		width:3rem;
+		text-align:right;
+
+	}
+}

@@ -1,0 +1,55 @@
+@import "../../../scss/_mixins.scss";
+app-container{
+	position:absolute;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background:url(../img/himmel_iphone4_640x960.png);
+	background-size: cover ;
+	.pageHolder	{
+		display:block;
+		position:relative;
+		width:100%;
+		max-width:22rem;
+		height:100%;
+		left:0;
+		margin:0 auto;		
+		padding-top:$top-menu-height;
+		transition:all 0.25s linear;
+	}
+
+	.topMenu{
+		position:absolute;
+		top:0;
+		left: 0;
+		right: 0;
+		height: $top-menu-height;
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.75) 75%, rgba(255, 255, 255, 0) 100%);
+		transition:all 0.25s linear;
+	}
+	.sideMenu{
+		position:absolute;
+		top:0;
+		left: -4.5rem;
+		bottom: 0;
+		width: $side-menu-width;
+		background: rgba(255, 255, 255, 0.6);
+		border-right:2px solid white;
+		transition:all 0.25s linear;
+	}
+	iscroller [name="wrapper"]{
+		padding-top: $top-menu-height;
+	}		
+}
+app-container.showMenu{
+	.sideMenu{
+		left:0;
+	}
+	.pageHolder{
+		left:4.5rem;
+	}
+	.topMenu{
+		left:4.5rem;
+	}
+}

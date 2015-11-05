@@ -1,101 +1,148 @@
 <iscroller>
 	<div name="wrapper">
 		<div name="innerscroller">
-			<div class="pullDown">
-				<span class="pullDownIcon">&nbsp;</span>
-				<span name="pulldownlabel" class="pullDownLabel" style="position:absolute;top:-40px;width:100%;left:0;right:0;display:block;">Pull down to refresh...</span>
+			<div if={pullToRefreshEnabled} class="pullDown">
+				<span name="pulldownlabel" class="pullDownLabel">Dra för att uppdatera...</span>
 			</div>
 			<yield/>
 		</div>
 	</div>
 	<script>
 		var self = this;
-		self.scrollTimer = null;
-		self.pullingForRefresh = false;
-		self.releaseToRefresh = false;
+		this.scrollTimer = null;
+		this.pullingForRefresh = false;
+		this.releaseToRefresh = false;
+		this.pullToRefreshEnabled = opts.pulltorefresh;
+		this.itemTagName = opts.itemtag; //The tag to use for detail items.
+		this.storeName = opts.storename; //This is used to listen for store update events.
+		this.collection = [];
 		RiotControl.addStore(self);
 
-		self.setupScroller = function(){
-			self.iScroller = new IScroll(self.wrapper,{
+		setupScroller(){
+			this.iScroller = new IScroll(this.wrapper,{
 			    mouseWheel: true,
-    			scrollbars: true,
-    			fadeScrollbars:true,
-    			interactiveScrollbars:true,
-    			shrinkScrollbars:'clip', //Make the scrollbar go out of view to appear as if its smaller.
+    			scrollbars: false,
+    			//fadeScrollbars:true,
+    			//interactiveScrollbars:true,
+    			//shrinkScrollbars:'clip', //Make the scrollbar go out of view to appear as if its smaller.
     			probeType:3, //Make scroll event fire pixel by pixel.
 			});			
-			self.trigger('scrollerReady');
+			this.trigger('scrollerReady');
 		}
 		
-		self.onScrollerReady = function(theScroller){
+		onMount(){
+			this.setupScroller();
+			RiotControl.trigger(this.storeName + '-list-init')
+		}
+		onScrollerReady (theScroller){
 			//Set up scroller event listeners.
-			self.iScroller.on('scroll', self.onScrolling);
+			this.iScroller.on('scroll', this.onScrolling);
 
-			self.iScroller.on('scrollStart', self.onScrollStart);
+			this.iScroller.on('scrollStart', this.onScrollStart);
 
-			self.iScroller.on('scrollEnd', self.onScrollEnd);
+			this.iScroller.on('scrollEnd', this.onScrollEnd);
 
 		}
-		self.onScrollStart = function(){
-			if (self.iScroller.y == 0 && self.iScroller.directionY == -1){
-				self.pullingForRefresh = true;
-				self.pulldownlabel.innerHTML = 'Dra för att uppdatera';
+		onScrollStart(){
+			if (this.iScroller.y == 0 && this.iScroller.directionY == -1 && this.pullToRefreshEnabled){
+				this.pullingForRefresh = true;
+				this.pulldownlabel.innerHTML = 'Dra för att uppdatera...';
 			}			
+
 		};
 
-		self.onScrollEnd = function(){
-			if (self.releaseToRefresh){
-				RiotControl.trigger('Some-store-name-refresh');
+		onScrollEnd(){
+			if (this.releaseToRefresh){
+				this.trigger('do-refresh');
+				RiotControl.trigger(this.storeName + '-check-for-new');
 			}
-			self.pullingForRefresh = false;
-			self.releaseToRefresh = false;
-			self.pulldownlabel.innerHTML = '';
+			this.pullingForRefresh = false;
+			this.releaseToRefresh = false;
+			this.pulldownlabel.innerHTML = '';
 		};
 
-		self.onScrolling = function(){
+		onScrolling(){
 
-			clearTimeout(self.scrollTimer);
-			if (self.pullingForRefresh) {
-				if (self.iScroller.y >= 80 && self.iScroller.directionY == -1){
-					self.pullingForRefresh = false;
-					self.releaseToRefresh = true;
-					self.pulldownlabel.innerHTML = 'Släpp för att uppdatera';
+			clearTimeout(this.scrollTimer);
+			if (this.pullingForRefresh) {
+				if (this.iScroller.y >= 60 && this.iScroller.directionY == -1){
+					this.pullingForRefresh = false;
+					this.releaseToRefresh = true;
+					this.pulldownlabel.innerHTML = 'Släpp för att uppdatera...';
 					console.log('Refresh me!');
 				}
 			}
 
-			self.scrollTimer = setTimeout(function(){
+			this.scrollTimer = setTimeout(function(){
 				var hiddenElements = self.innerscroller.querySelectorAll('.hidden')
 				for (var x = 0;x < hiddenElements.length; x++){
+					self.loadImageInView(hiddenElements[x]);
 					self.animateElementInView(hiddenElements[x]);
 				}
-			},15);
+				//self.iScroller.refresh();
+				if ((self.iScroller.y*-1) >= (self.innerscroller.offsetHeight - self.wrapperHeight - 125) && self.iScroller.directionY == 1){
+					//console.log('this is the bottom, fetch some more please');
+					RiotControl.trigger(self.storeName + '-reached-end');
+				}
+			},5);
 
 		};
-		self.animateElementInView = function(element){
-	        if (element.offsetTop < (self.iScroller.y * -1) + self.wrapperHeight ) {
+		animateElementInView(element){
+			var hasChanged = false;
+	        if (element.offsetTop < (this.iScroller.y * -1) + this.wrapperHeight ) {
 	        	element.classList.remove('hidden');
-	        	element.classList.add(self.animateItemClass);
+	        	element.classList.add(this.animateItemClass);
+	        	hasChanged = true;
         	}
+        	if (hasChanged) {self.iScroller.refresh();}
 		};
 		
-		self.onUpdate = function(){
-			if (self.iScroller){
+		loadImageInView(element){
+			var hasChanged = false;
+			var hiddenImages = element.querySelectorAll('[data-src]');
+			for (var x = 0;x < hiddenImages.length; x++){
+				hiddenImages[x].setAttribute('src',hiddenImages[x].getAttribute('data-src') );
+				hiddenImages[x].removeAttribute('data-src','');
+				hasChanged = true;
+			}
+			if (hasChanged) {self.iScroller.refresh();}
+		}
+
+		onUpdate(){
+			if (this.iScroller){
 				setTimeout(function(){
 					self.iScroller.refresh();	
 				},0)
 			}
 			//Run once if there are any items in view that are hidden.
-			self.onScrolling();		
-			self.wrapperHeight = self.wrapper.offsetHeight;	
-			self.animateItemClass = opts.animateitemclass || 'fadeIn'; 
+			this.getOpts();
+			this.onScrolling();
+			this.wrapperHeight = this.wrapper.offsetHeight;	
+			this.pullingForRefresh = false;
 		}
-
-		self.on('scrollerReady', self.onScrollerReady);
+		getOpts(){
+			this.animateItemClass = opts.animateitemclass || 'fadeIn'; 
+			this.pullToRefreshEnabled = opts.pulltorefresh || false;
+			this.storeName = opts.storename; //This is used to listen for store update events.
+			this.itemTagName = opts.itemtag;
+		}
+		this.on('scrollerReady', this.onScrollerReady);
 		
-		self.on('update', self.onUpdate);	
+		this.on('update', this.onUpdate);	
 
-		self.on('mount', self.setupScroller);
+		this.on('mount', this.onMount);
+
+		this.on(this.storeName + '-collection-changed', function(coll){
+			console.log('scroller got noticed about a collection change');
+			this.collection = coll;
+			setTimeout(function(){
+				self.update();
+				self.iScroller.refresh();
+			}, 50);
+			//self.update();
+
+			
+		})
 
 	</script>
 </iscroller>
